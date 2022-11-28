@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    //アニメーションスタックの制御
+    @State private var enabled = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        Button("Top me") {
+            enabled.toggle()
         }
-        .padding()
+        .frame(width: 200, height: 200)
+        .animation(nil, value: enabled)
+        .foregroundColor(.white)
+        .clipShape(RoundedRectangle(cornerRadius: enabled ? 60 : 0))
+        .animation(.interpolatingSpring(stiffness: 10, damping: 1), value: enabled)
+        .background(enabled ? .blue : .red)//clipShapeとanimationが取り消されてします！！
+
     }
 }
 
